@@ -119,7 +119,7 @@ export default function CreateBusiness({ flash }) {
                     onValuesChange={onValuesChange}
                 >
                     <Row justify={"space-between"} gutter={24}>
-                        <Col span={12}>
+                        <Col span={24} md={12}>
                             <Form.Item
                                 label={"Business Name"}
                                 name={"business_name"}
@@ -187,9 +187,9 @@ export default function CreateBusiness({ flash }) {
                                 </Upload>
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={24} md={12}>
                             <Row justify={"space-between"}>
-                                <Col span={12}>
+                                <Col span={24} md={12}>
                                     <Form.Item
                                         label={"Country"}
                                         name={"country"}
@@ -202,7 +202,7 @@ export default function CreateBusiness({ flash }) {
                                     </Form.Item>
                                 </Col>
 
-                                <Col>
+                                <Col span={24} md={12}>
                                     <Form.Item label={"City"} name={"city"}>
                                         <Input placeholder="Enter City name " />
                                     </Form.Item>
@@ -217,7 +217,7 @@ export default function CreateBusiness({ flash }) {
                             </Form.Item>
 
                             <Row justify={"space-between"}>
-                                <Col span={12}>
+                                <Col span={24} md={12}>
                                     <Form.Item
                                         label={"Latitude"}
                                         name={"latitude"}
@@ -226,7 +226,7 @@ export default function CreateBusiness({ flash }) {
                                     </Form.Item>
                                 </Col>
 
-                                <Col>
+                                <Col span={24} md={12}>
                                     <Form.Item
                                         label={"Longitude"}
                                         name={"longitude"}

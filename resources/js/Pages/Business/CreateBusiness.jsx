@@ -188,7 +188,7 @@ export default function CreateBusiness({ flash }) {
                             </Form.Item>
                         </Col>
                         <Col span={24} md={12}>
-                            <Row justify={"space-between"}>
+                            <Row justify={"space-between"} gutter={12}>
                                 <Col span={24} md={12}>
                                     <Form.Item
                                         label={"Country"}
@@ -216,7 +216,7 @@ export default function CreateBusiness({ flash }) {
                                 <Input placeholder="Enter street address" />
                             </Form.Item>
 
-                            <Row justify={"space-between"}>
+                            <Row justify={"space-between"} gutter={12}>
                                 <Col span={24} md={12}>
                                     <Form.Item
                                         label={"Latitude"}

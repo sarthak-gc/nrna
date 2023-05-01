@@ -1,29 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import GoogleMapReact from "google-map-react";
-import Marker from "../../components/Marker";
+
 import { Col, Row } from "antd";
 import ListMarker from "../../components/ListMarker";
+import useSupercluster from "use-supercluster";
+
+const Marker = ({ children }) => children;
 
 export default function ListBusiness({ businesses }) {
-    const defaultProps = {
-        center: {
-            lat: 10.99835602,
-            lng: 77.01502627,
+    const [bounds, setBounds] = useState(null);
+    const [zoom, setZoom] = useState(10);
+
+    const mapRef = useRef();
+
+    const data = useMemo(() => {
+        let res = businesses.map((elem) => {
+            return {
+                type: "Feature",
+                properties: {
+                    cluster: false,
+                    category: "wells",
+                    wellId: elem.id,
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [
+                        parseFloat(elem.location.coordinates[0]),
+                        parseFloat(elem.location.coordinates[1]),
+                    ],
+                },
+            };
+        });
+        return res;
+    }, []);
+    console.log({ data });
+    const { clusters, supercluster } = useSupercluster({
+        points: data,
+        bounds,
+        zoom,
+        options: {
+            // radius: 75,
+            // maxZoom: 20,
+            // map: (item) => ({ c: 1 }),
+            // reduce: (acc, cur) => {
+            //     acc.c += a;
+            // },
         },
-        zoom: 0,
-    };
-
-    const [selectedBusiness, setSelectedBusiness] = useState(defaultProps);
-
-    const markers = businesses.map((business) => {
-        return (
-            <ListMarker
-                lat={business.location.coordinates[1]}
-                lng={business.location.coordinates[0]}
-                business={business}
-            />
-        );
     });
+
+    useEffect(() => {
+        console.log({ clusters });
+        console.log(supercluster);
+    }, [clusters, supercluster]);
+
     return (
         <>
             <Row>
@@ -32,15 +61,84 @@ export default function ListBusiness({ businesses }) {
                         <GoogleMapReact
                             bootstrapURLKeys={{
                                 key: "AIzaSyA9cbq8eh-YNzAGcGOkTG5VphGeOC-J3rc",
-                                libraries: ["places", "geometry"],
                             }}
-                            defaultCenter={defaultProps.center}
-                            center={selectedBusiness.center}
-                            zoom={selectedBusiness.zoom}
-                            defaultZoom={defaultProps.zoom}
+                            defaultCenter={{ lat: 48.8566, lng: 2.3522 }}
+                            defaultZoom={1}
+                            onGoogleApiLoaded={({ map }) => {
+                                mapRef.current = map;
+                            }}
+                            onChange={({ zoom, bounds }) => {
+                                setZoom(zoom);
+                                const boundss = [
+                                    bounds.nw.lng,
+                                    bounds.se.lat,
+                                    bounds.se.lng,
+                                    bounds.nw.lat,
+                                ];
+
+                                setBounds(boundss);
+                            }}
                             yesIWantToUseGoogleMapApiInternals
                         >
-                            {markers}
+                            {clusters &&
+                                clusters.map((cluster) => {
+                                    const [longitude, latitude] =
+                                        cluster.geometry.coordinates;
+                                    const {
+                                        cluster: isCluster,
+                                        point_count: pointCount,
+                                    } = cluster.properties;
+
+                                    if (isCluster) {
+                                        let size =
+                                            (pointCount * 20) / data.length;
+
+                                        return (
+                                            <Marker
+                                                lat={latitude}
+                                                lng={longitude}
+                                                key={`cluster-${cluster.id}`}
+                                                className="cluster-marker"
+                                            >
+                                                <div
+                                                    className="cluster-marker"
+                                                    style={{
+                                                        width: size + "px",
+                                                        height: size + "px",
+                                                    }}
+                                                    onClick={() => {
+                                                        const expansionZoom =
+                                                            Math.min(
+                                                                supercluster.getClusterExpansionZoom(
+                                                                    cluster.id
+                                                                ),
+                                                                20
+                                                            );
+                                                        mapRef.current.setZoom(
+                                                            expansionZoom
+                                                        );
+                                                        mapRef.current.panTo({
+                                                            lat: latitude,
+                                                            lng: longitude,
+                                                        });
+                                                    }}
+                                                >
+                                                    {pointCount}
+                                                </div>
+                                            </Marker>
+                                        );
+                                    } else {
+                                        return (
+                                            <Marker
+                                                key={`cluster-${cluster.properties.wellId}`}
+                                                lat={latitude}
+                                                lng={longitude}
+                                            >
+                                                <div className="p-2 bg-red-500 rounded-full border-2 border-white"></div>
+                                            </Marker>
+                                        );
+                                    }
+                                })}
                         </GoogleMapReact>
                     </div>
                 </Col>

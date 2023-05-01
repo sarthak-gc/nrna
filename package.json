@@ -23,6 +23,8 @@
         "react-dom": "^18.2.0",
         "react-google-recaptcha": "^2.1.0",
         "react-google-recaptcha-v3": "^1.10.1",
-        "styled-components": "^5.3.10"
+        "styled-components": "^5.3.10",
+        "supercluster": "^8.0.1",
+        "use-supercluster": "^0.4.0"
     }
 }

@@ -11,11 +11,12 @@ import {
     Button,
     Select,
     Divider,
+    Breadcrumb,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import GoogleMapInput from "../../components/GoogleMapInput";
-import { router, useForm } from "@inertiajs/react";
+import { Link, router, useForm } from "@inertiajs/react";
 import {
     GoogleReCaptcha,
     GoogleReCaptchaProvider,
@@ -106,10 +107,20 @@ export default function CreateBusiness({ flash }) {
                         showIcon
                     />
                 )}
+                <Breadcrumb
+                    items={[
+                        {
+                            title: <Link href="/">Home</Link>,
+                        },
+                        {
+                            title: "Create New Business",
+                        },
+                    ]}
+                />
+
                 <h1 className="font-primary text-xl font-bold mt-4">
                     Add New Business
                 </h1>
-
                 <Form
                     form={form}
                     onFinish={onFinish}

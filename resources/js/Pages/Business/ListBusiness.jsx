@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import GoogleMapReact from "google-map-react";
 
-import { Col, Row } from "antd";
+import { Breadcrumb, Col, Row } from "antd";
 import ListMarker from "../../components/ListMarker";
 import useSupercluster from "use-supercluster";
+import CountMarker from "../../components/CountMarker";
+import { Link } from "@inertiajs/react";
 
 const Marker = ({ children }) => children;
 
@@ -53,6 +55,8 @@ export default function ListBusiness({ businesses }) {
         console.log(supercluster);
     }, [clusters, supercluster]);
 
+    const [selectedBusiness, setSelectedBusiness] = useState();
+
     return (
         <>
             <Row>
@@ -98,14 +102,12 @@ export default function ListBusiness({ businesses }) {
                                                 lat={latitude}
                                                 lng={longitude}
                                                 key={`cluster-${cluster.id}`}
-                                                className="cluster-marker"
                                             >
-                                                <div
-                                                    className="cluster-marker"
-                                                    style={{
-                                                        width: size + "px",
-                                                        height: size + "px",
-                                                    }}
+                                                <CountMarker
+                                                    supercluster={supercluster}
+                                                    mapRef={mapRef}
+                                                    pointCount={pointCount}
+                                                    size={size}
                                                     onClick={() => {
                                                         const expansionZoom =
                                                             Math.min(
@@ -122,9 +124,7 @@ export default function ListBusiness({ businesses }) {
                                                             lng: longitude,
                                                         });
                                                     }}
-                                                >
-                                                    {pointCount}
-                                                </div>
+                                                />
                                             </Marker>
                                         );
                                     } else {
@@ -134,7 +134,7 @@ export default function ListBusiness({ businesses }) {
                                                 lat={latitude}
                                                 lng={longitude}
                                             >
-                                                <div className="p-2 bg-red-500 rounded-full border-2 border-white"></div>
+                                                <ListMarker />
                                             </Marker>
                                         );
                                     }
@@ -144,6 +144,16 @@ export default function ListBusiness({ businesses }) {
                 </Col>
                 <Col span={24} md={8} className="">
                     <div className="p-4 bg-white overflow-y-scroll h-half-screen md:h-screen">
+                        <Breadcrumb
+                            items={[
+                                {
+                                    title: <Link href="/">Home</Link>,
+                                },
+                                {
+                                    title: "List all Business",
+                                },
+                            ]}
+                        />
                         <h2 className="text-2xl font-bold font-primary text-gray-800">
                             Listed Business ({businesses.length})
                         </h2>
@@ -151,15 +161,11 @@ export default function ListBusiness({ businesses }) {
                             <div
                                 className="business-card flex mt-2 p-4 rounded-md cursor-pointer hover:bg-purple-50"
                                 onClick={() => {
-                                    setSelectedBusiness({
-                                        center: {
-                                            lat: business.location
-                                                .coordinates[1],
-                                            lng: business.location
-                                                .coordinates[0],
-                                        },
-                                        zoom: 10,
+                                    mapRef.current.panTo({
+                                        lat: business.location.coordinates[1],
+                                        lng: business.location.coordinates[0],
                                     });
+                                    mapRef.current.setZoom(15);
                                 }}
                             >
                                 <div className="w-1/3 h-32 bg-gray-200 rounded-lg overflow-hidden">

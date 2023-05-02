@@ -26,7 +26,7 @@ class CreateBusinessRequest extends FormRequest
             'street_address' => 'required',
             'city' => 'required',
             'country' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:businesses',
             'latitude' => 'required',
             'longitude' => 'required',
             'captcha' => 'required|captcha'

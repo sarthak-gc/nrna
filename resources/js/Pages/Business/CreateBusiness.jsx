@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "antd/dist/reset.css";
 import {
     Row,
@@ -12,6 +12,7 @@ import {
     Select,
     Divider,
     Breadcrumb,
+    Checkbox,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
@@ -26,6 +27,7 @@ export default function CreateBusiness({ flash }) {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
     const [logo, setLogo] = useState();
+    const captchaRef = useRef();
 
     const { data, setData, post, processing, errors } = useForm({
         business_name: "",
@@ -47,6 +49,9 @@ export default function CreateBusiness({ flash }) {
         post("/business", {
             onSuccess: () => {
                 form.resetFields();
+            },
+            onError: () => {
+                captchaRef.current.reset();
             },
         });
     };
@@ -108,6 +113,7 @@ export default function CreateBusiness({ flash }) {
                     />
                 )}
                 <Breadcrumb
+                    className="mt-2"
                     items={[
                         {
                             title: <Link href="/">Home</Link>,
@@ -265,9 +271,35 @@ export default function CreateBusiness({ flash }) {
                                     sitekey="6Lc4BMUlAAAAAIOZ5ZbGavS5hhXjx-oG9sP6Sx-0"
                                     onChange={(value) => {
                                         setData("captcha", value);
-                                        data.setFieldValue("captcha", value);
+                                        form.setFieldValue("captcha", value);
                                     }}
+                                    ref={captchaRef}
                                 />
+                            </Form.Item>
+
+                            <Form.Item
+                                name="agreement"
+                                valuePropName="checked"
+                                rules={[
+                                    {
+                                        validator: (_, value) =>
+                                            value
+                                                ? Promise.resolve()
+                                                : Promise.reject(
+                                                      new Error(
+                                                          "Please accept the terms and conditions before proceeding"
+                                                      )
+                                                  ),
+                                    },
+                                ]}
+                            >
+                                <Checkbox>
+                                    I agree with{" "}
+                                    <Link href="#" className="text-orange-500">
+                                        terms and conditions
+                                    </Link>{" "}
+                                    provided by nrna
+                                </Checkbox>
                             </Form.Item>
                         </Col>
                     </Row>

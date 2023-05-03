@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import GoogleMapReact from "google-map-react";
 
-import { Breadcrumb, Col, Row } from "antd";
+import { Breadcrumb, Col, Input, Row } from "antd";
 import ListMarker from "../../components/ListMarker";
 import useSupercluster from "use-supercluster";
 import CountMarker from "../../components/CountMarker";
@@ -12,8 +12,13 @@ const Marker = ({ children }) => children;
 export default function ListBusiness({ businesses }) {
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(10);
+    const [searchText, setSearchText] = useState("");
 
     const mapRef = useRef();
+
+    const filteredBusiness = businesses.filter((elem) =>
+        elem.business_name.match(new RegExp(searchText, "i"))
+    );
 
     const data = useMemo(() => {
         let res = businesses.map((elem) => {
@@ -34,7 +39,7 @@ export default function ListBusiness({ businesses }) {
             };
         });
         return res;
-    }, []);
+    }, [searchText]);
     console.log({ data });
     const { clusters, supercluster } = useSupercluster({
         points: data,
@@ -157,7 +162,15 @@ export default function ListBusiness({ businesses }) {
                         <h2 className="text-2xl font-bold font-primary text-gray-800">
                             Listed Business ({businesses.length})
                         </h2>
-                        {businesses.map((business) => (
+                        <div className="search my-2">
+                            <Input
+                                placeholder="Search"
+                                onChange={(e) => {
+                                    setSearchText(e.target.value);
+                                }}
+                            />
+                        </div>
+                        {filteredBusiness.map((business) => (
                             <div
                                 className="business-card flex mt-2 p-4 rounded-md cursor-pointer hover:bg-purple-50"
                                 onClick={() => {

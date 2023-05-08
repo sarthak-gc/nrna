@@ -36,6 +36,7 @@ export default function ListBusiness({ businesses }) {
                         parseFloat(elem.location.coordinates[1]),
                     ],
                 },
+                ...elem,
             };
         });
         return res;
@@ -139,7 +140,9 @@ export default function ListBusiness({ businesses }) {
                                                 lat={latitude}
                                                 lng={longitude}
                                             >
-                                                <ListMarker />
+                                                <ListMarker
+                                                    business={cluster}
+                                                />
                                             </Marker>
                                         );
                                     }

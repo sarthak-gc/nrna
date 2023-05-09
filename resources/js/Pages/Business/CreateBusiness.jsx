@@ -23,6 +23,8 @@ import {
     GoogleReCaptchaProvider,
 } from "react-google-recaptcha-v3";
 import ReCAPTCHA from "react-google-recaptcha";
+import countries from "./../../data/countries.json";
+
 export default function CreateBusiness({ flash }) {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
@@ -212,9 +214,11 @@ export default function CreateBusiness({ flash }) {
                                         name={"country"}
                                     >
                                         <Select placeholder="Select Country">
-                                            <Option value="np">Nepal</Option>
-                                            <Option value="DE">Germany</Option>
-                                            <Option value="IN">India</Option>
+                                            {countries.map((country) => (
+                                                <Option value={country.code}>
+                                                    {country.name}
+                                                </Option>
+                                            ))}
                                         </Select>
                                     </Form.Item>
                                 </Col>

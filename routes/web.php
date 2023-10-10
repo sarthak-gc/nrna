@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/business', [BusinessController::class, 'index']);
+Route::get('/business', [BusinessController::class, 'index'])->name('business.index');
 Route::get('/business/create', [BusinessController::class, 'create'])->name('business.create');
 Route::post('/business', [BusinessController::class, 'store']);

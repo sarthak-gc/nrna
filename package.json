@@ -17,6 +17,9 @@
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/react": "^1.0.6",
+        "@radix-ui/react-navigation-menu": "^1.1.2",
+        "@radix-ui/react-portal": "^1.0.2",
+        "@react-spring/web": "^9.7.2",
         "antd": "^5.4.5",
         "google-map-react": "^2.2.0",
         "react": "^18.2.0",
@@ -25,6 +28,7 @@
         "react-google-recaptcha-v3": "^1.10.1",
         "styled-components": "^5.3.10",
         "supercluster": "^8.0.1",
+        "swiper": "^9.3.2",
         "use-supercluster": "^0.4.0"
     }
 }

@@ -11,7 +11,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
         <!-- Styles -->
-        @viteReactRefresh
    
         @vite('resources/css/app.css') 
         @vite('resources/js/app.jsx') 

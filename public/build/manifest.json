@@ -1,19 +1,31 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-772165d0.css",
+    "file": "assets/app-8914aab2.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-0cca4fec.css",
+    "file": "assets/app-6b207eb3.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.jsx": {
-    "css": [
-      "assets/app-0cca4fec.css"
+    "assets": [
+      "assets/logo-fc19e91c.png",
+      "assets/slider1-aa440e98.jpg"
     ],
-    "file": "assets/app-bf1da718.js",
+    "css": [
+      "assets/app-6b207eb3.css"
+    ],
+    "file": "assets/app-de34d863.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
+  },
+  "resources/js/assets/logo.png": {
+    "file": "assets/logo-fc19e91c.png",
+    "src": "resources/js/assets/logo.png"
+  },
+  "resources/js/assets/slider1.jpg": {
+    "file": "assets/slider1-aa440e98.jpg",
+    "src": "resources/js/assets/slider1.jpg"
   }
 }

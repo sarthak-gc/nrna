@@ -5,7 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@vitejs/plugin-react": "^4.0.0",
+        "@vitejs/plugin-react": "^4.3.4",
         "autoprefixer": "^10.4.14",
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.2",
@@ -22,8 +22,8 @@
         "@react-spring/web": "^9.7.2",
         "antd": "^5.4.5",
         "google-map-react": "^2.2.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
         "react-google-recaptcha": "^2.1.0",
         "react-google-recaptcha-v3": "^1.10.1",
         "styled-components": "^5.3.10",

@@ -4,13 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBusinessRequest extends FormRequest
-{
+class CreateBusinessRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
+    public function authorize(): bool {
         return true;
     }
 
@@ -19,8 +17,7 @@ class CreateBusinessRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(): array
-    {
+    public function rules(): array {
         return [
             'business_name' => 'required',
             'street_address' => 'required',
@@ -29,7 +26,7 @@ class CreateBusinessRequest extends FormRequest
             'email' => 'required|unique:businesses',
             'latitude' => 'required',
             'longitude' => 'required',
-            'captcha' => 'required|captcha'
+            // 'captcha' => 'required|captcha'
         ];
     }
 }
